@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android local files
+local.properties
+*.iml
+.idea/
+
+# APK and signing outputs
+*.apk
+*.aab
+*.jks
+*.keystore
+app-release-signed.apk
+
+# Kotlin / Java
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

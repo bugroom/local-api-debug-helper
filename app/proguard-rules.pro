@@ -1,0 +1,11 @@
+# Add project specific ProGuard rules here.
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends android.app.Activity
+-keep public class * extends androidx.fragment.app.Fragment
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep class * extends androidx.** { *; }

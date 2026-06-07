@@ -1,0 +1,54 @@
+name: Build API Debug Helper APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "app/**"
+      - "gradle/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradlew"
+      - ".github/workflows/build_android.yaml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "app/**"
+      - "gradle/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle.properties"
+      - "gradlew"
+      - ".github/workflows/build_android.yaml"
+
+jobs:
+  build_apk:
+    name: Build release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Build release APK
+        run: ./gradlew :app:assembleRelease
+
+      - name: Upload unsigned release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-debug-helper-release-unsigned
+          path: app/build/outputs/apk/release/app-release-unsigned.apk

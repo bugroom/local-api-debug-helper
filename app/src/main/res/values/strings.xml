@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">API调试助手</string>
+    
+    <!-- Main Screen -->
+    <string name="main_title">API调试助手</string>
+    <string name="tab_chat">聊天</string>
+    <string name="tab_history">历史</string>
+    <string name="list_models">模型列表</string>
+    <string name="chat_completion">聊天补全</string>
+    <string name="request_history">请求历史</string>
+    
+    <!-- Connection Settings -->
+    <string name="connection_title">连接设置</string>
+    <string name="server_config">服务器配置</string>
+    <string name="server_address">服务器地址</string>
+    <string name="server_host">服务器地址</string>
+    <string name="enter_host">输入服务器地址</string>
+    <string name="port">端口</string>
+    <string name="server_port">端口</string>
+    <string name="enter_port">输入端口</string>
+    <string name="api_key">API密钥</string>
+    <string name="enter_api_key">输入API密钥</string>
+    <string name="connect">连接</string>
+    <string name="disconnect">断开</string>
+    <string name="save">保存</string>
+    
+    <!-- Health Check -->
+    <string name="health_status">健康状态</string>
+    <string name="health_check">健康检查</string>
+    <string name="status">状态</string>
+    <string name="status_connected">已连接</string>
+    <string name="status_disconnected">未连接</string>
+    <string name="status_connecting">连接中</string>
+    <string name="status_error">错误</string>
+    
+    <!-- Chat Screen -->
+    <string name="chat_title">聊天</string>
+    <string name="select_model">选择模型</string>
+    <string name="model">模型</string>
+    <string name="send_message">发送消息</string>
+    <string name="send">发送</string>
+    <string name="message_hint">输入消息…</string>
+    <string name="message">消息</string>
+    <string name="enter_message">输入消息</string>
+    <string name="temperature">温度</string>
+    <string name="max_tokens">最大令牌</string>
+    <string name="top_p">Top P</string>
+    <string name="top_k">Top K</string>
+    <string name="streaming">流式输出</string>
+    <string name="clear_chat">清空聊天</string>
+    <string name="clear">清空</string>
+    <string name="response">响应</string>
+    
+    <!-- History Screen -->
+    <string name="history_title">历史记录</string>
+    <string name="clear_history">清空历史</string>
+    <string name="no_history">暂无历史记录</string>
+    
+    <!-- Models Screen -->
+    <string name="models_title">模型列表</string>
+    <string name="refresh_models">刷新模型</string>
+    <string name="no_models">暂无可用模型</string>
+    
+    <!-- Error Messages -->
+    <string name="error_connection">连接失败</string>
+    <string name="error_request">请求失败</string>
+    <string name="error_model_not_found">模型未找到</string>
+    <string name="error_empty_message">请输入消息</string>
+    <string name="error_empty_server">请输入服务器地址</string>
+    
+    <!-- Status Messages -->
+    <string name="status_sending">发送中…</string>
+    <string name="status_processing">处理中…</string>
+    <string name="connected">已连接</string>
+    <string name="disconnected">未连接</string>
+    <string name="connecting">连接中</string>
+    <string name="error">错误</string>
+</resources>
