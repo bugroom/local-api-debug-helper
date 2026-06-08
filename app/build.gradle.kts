@@ -21,9 +21,28 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            // 使用环境变量或本地属性文件中的签名信息
+            val storeFilePath = System.getenv("SIGNING_STORE_FILE") ?: ""
+            val storePassword = System.getenv("SIGNING_STORE_PASSWORD") ?: ""
+            val keyAlias = System.getenv("SIGNING_KEY_ALIAS") ?: ""
+            val keyPassword = System.getenv("SIGNING_KEY_PASSWORD") ?: ""
+            
+            if (storeFilePath.isNotEmpty() && storePassword.isNotEmpty() 
+                && keyAlias.isNotEmpty() && keyPassword.isNotEmpty()) {
+                storeFile = file(storeFilePath)
+                this.storePassword = storePassword
+                this.keyAlias = keyAlias
+                this.keyPassword = keyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

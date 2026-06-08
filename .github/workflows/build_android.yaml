@@ -24,14 +24,31 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build release APK
+      - name: Generate signing keystore
+        run: |
+          keytool -genkey -v \
+            -keystore debug-helper.keystore \
+            -alias debughelper \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Debug Helper, OU=Dev, O=Bugroom, L=Local, S=State, C=CN" \
+            -storepass debughelper123 \
+            -keypass debughelper123
+
+      - name: Build signed release APK
+        env:
+          SIGNING_STORE_FILE: ${{ github.workspace }}/debug-helper.keystore
+          SIGNING_STORE_PASSWORD: debughelper123
+          SIGNING_KEY_ALIAS: debughelper
+          SIGNING_KEY_PASSWORD: debughelper123
         run: ./gradlew :app:assembleRelease
 
-      - name: Upload unsigned release APK
+      - name: Upload signed release APK
         uses: actions/upload-artifact@v4
         with:
-          name: api-debug-helper-release-unsigned
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          name: api-debug-helper-release
+          path: app/build/outputs/apk/release/app-release.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -53,11 +70,11 @@ jobs:
             - 应用内日志查看
             
             ### 安装
-            1. 下载 `app-release-unsigned.apk`
+            1. 下载 `app-release.apk`（已签名版本）
             2. 在 Android 设备上安装
             3. 配置 Gallery API 服务地址即可测试
           files: |
-            app/build/outputs/apk/release/app-release-unsigned.apk
+            app/build/outputs/apk/release/app-release.apk
           draft: false
           prerelease: true
           make_latest: true
