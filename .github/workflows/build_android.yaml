@@ -3,6 +3,9 @@ name: Build API Debug Helper APK
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build_apk:
     name: Build release APK
@@ -50,6 +53,13 @@ jobs:
           name: api-debug-helper-release
           path: app/build/outputs/apk/release/app-release*.apk
 
+      - name: Delete old release tag if exists
+        run: |
+          gh release delete latest --yes || true
+          git push origin :refs/tags/latest || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -61,6 +71,7 @@ jobs:
             **用途**: 测试 Google AI Edge Gallery 本地 API 服务
             **目标项目**: https://github.com/bugroom/google-ai-edge-gallery-local-api
             **构建时间**: ${{ github.event.head_commit.timestamp }}
+            **提交**: ${{ github.sha }}
             
             ### 功能特性
             - 测试 /health 健康检查
@@ -77,6 +88,5 @@ jobs:
             app/build/outputs/apk/release/app-release*.apk
           draft: false
           prerelease: true
-          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
