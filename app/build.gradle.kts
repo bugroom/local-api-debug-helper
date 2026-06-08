@@ -25,35 +25,38 @@ android {
         create("release") {
             // CI 环境：从环境变量读取签名信息
             // 本地环境：从 local.properties 或跳过签名
-            val storeFilePath = System.getenv("SIGNING_STORE_FILE") 
-                ?: rootProject.file("local.properties").let { 
-                    if (it.exists()) {
-                        val props = java.util.Properties()
-                        props.load(it.inputStream())
-                        props.getProperty("SIGNING_STORE_FILE", "")
-                    } else ""
-                }
+            val localPropsFile = rootProject.file("local.properties")
+            val localStoreFile = if (localPropsFile.exists()) {
+                java.util.Properties().apply { 
+                    load(localPropsFile.inputStream()) 
+                }.getProperty("SIGNING_STORE_FILE", "")
+            } else ""
+            
+            val storeFilePath = System.getenv("SIGNING_STORE_FILE") ?: localStoreFile
             
             if (storeFilePath.isNotEmpty() && file(storeFilePath).exists()) {
                 storeFile = file(storeFilePath)
-                storePassword = System.getenv("SIGNING_STORE_PASSWORD") 
-                    ?: (rootProject.file("local.properties").let {
-                        val props = java.util.Properties()
-                        if (it.exists()) props.load(it.inputStream())
-                        props.getProperty("SIGNING_STORE_PASSWORD", "")
-                    })
-                keyAlias = System.getenv("SIGNING_KEY_ALIAS") 
-                    ?: (rootProject.file("local.properties").let {
-                        val props = java.util.Properties()
-                        if (it.exists()) props.load(it.inputStream())
-                        props.getProperty("SIGNING_KEY_ALIAS", "")
-                    })
-                keyPassword = System.getenv("SIGNING_KEY_PASSWORD") 
-                    ?: (rootProject.file("local.properties").let {
-                        val props = java.util.Properties()
-                        if (it.exists()) props.load(it.inputStream())
-                        props.getProperty("SIGNING_KEY_PASSWORD", "")
-                    })
+                storePassword = System.getenv("SIGNING_STORE_PASSWORD") ?: (
+                    if (localPropsFile.exists()) {
+                        java.util.Properties().apply { 
+                            load(localPropsFile.inputStream()) 
+                        }.getProperty("SIGNING_STORE_PASSWORD", "")
+                    } else ""
+                )
+                keyAlias = System.getenv("SIGNING_KEY_ALIAS") ?: (
+                    if (localPropsFile.exists()) {
+                        java.util.Properties().apply { 
+                            load(localPropsFile.inputStream()) 
+                        }.getProperty("SIGNING_KEY_ALIAS", "")
+                    } else ""
+                )
+                keyPassword = System.getenv("SIGNING_KEY_PASSWORD") ?: (
+                    if (localPropsFile.exists()) {
+                        java.util.Properties().apply { 
+                            load(localPropsFile.inputStream()) 
+                        }.getProperty("SIGNING_KEY_PASSWORD", "")
+                    } else ""
+                )
             }
         }
     }
