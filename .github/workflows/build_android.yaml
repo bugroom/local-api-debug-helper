@@ -52,3 +52,35 @@ jobs:
         with:
           name: api-debug-helper-release-unsigned
           path: app/build/outputs/apk/release/app-release-unsigned.apk
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: API Debug Helper - Latest Build
+          body: |
+            调试助手 APK 自动构建版本
+            
+            **用途**: 测试 Google AI Edge Gallery 本地 API 服务
+            **目标项目**: https://github.com/bugroom/google-ai-edge-gallery-local-api
+            **构建时间**: ${{ github.event.head_commit.timestamp }}
+            
+            ### 功能特性
+            - 测试 /health 健康检查
+            - 获取 /v1/models 模型列表
+            - 发送 /v1/chat/completions 聊天请求
+            - 支持流式和非流式响应
+            - 应用内日志查看
+            
+            ### 安装
+            1. 下载 `app-release-unsigned.apk`
+            2. 在 Android 设备上安装
+            3. 配置 Gallery API 服务地址即可测试
+          files: |
+            app/build/outputs/apk/release/app-release-unsigned.apk
+          draft: false
+          prerelease: true
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
