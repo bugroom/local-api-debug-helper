@@ -2,10 +2,6 @@ name: Build API Debug Helper APK
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build_apk:
@@ -38,7 +34,6 @@ jobs:
           path: app/build/outputs/apk/release/app-release-unsigned.apk
 
       - name: Create Release
-        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
