@@ -1,6 +1,10 @@
-# Local API Debug Helper
+# 本地 API 调试助手
 
-用于测试 OpenAI-compatible local API server 的 Android 调试工具。目标服务项目是 [google-ai-edge-gallery-local-api](https://github.com/bugroom/google-ai-edge-gallery-local-api)。
+> 代码全由 AI 修改生成。
+
+本地 API 调试助手是一个 Android 测试工具，用于验证 OpenAI 兼容本地 API 服务是否可用。它可以帮助开发者在手机端直接测试健康检查、模型列表、非流式聊天补全、SSE 流式聊天补全和请求日志，适合作为本地 API 服务开发、联调和排障工具。
+
+目标服务项目是 [google-ai-edge-gallery-local-api](https://github.com/bugroom/google-ai-edge-gallery-local-api)。
 
 这个仓库只维护 API 调试助手本身，适合独立构建、独立发布 APK、独立记录问题。
 
