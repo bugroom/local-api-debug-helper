@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   build_apk:
@@ -38,6 +39,15 @@ jobs:
         run: |
           mv app/build/outputs/apk/release/app-release.apk \
              app/build/outputs/apk/release/api-debug-helper-${{ steps.timestamp.outputs.ts }}.apk
+
+      - name: Delete old Artifacts
+        run: |
+          for id in $(gh api "repos/${{ github.repository }}/actions/artifacts" --jq '.artifacts[] | select(.name | startswith("api-debug-helper")) | .id'); do
+            echo "Deleting artifact $id"
+            gh api "repos/${{ github.repository }}/actions/artifacts/$id" -X DELETE
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload release APK
         uses: actions/upload-artifact@v4
